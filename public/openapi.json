@@ -1,0 +1,250 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "W3HealthChecker API v1",
+    "description": "Developer and Agency REST API for W3HealthChecker Website Intelligence Platform. Enables programmatic website scanning, health report retrieval, and monitoring management.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "W3HealthChecker Platform Support",
+      "url": "https://w3healthchecker.com/support"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8000/api/v1",
+      "description": "Local development server"
+    },
+    {
+      "url": "https://api.w3healthchecker.com/v1",
+      "description": "Production API cluster"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key",
+        "description": "API token formatted as w3_live_<token>"
+      }
+    },
+    "schemas": {
+      "ScanTriggerRequest": {
+        "type": "object",
+        "required": ["url"],
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://example.com"
+          }
+        }
+      },
+      "ScanStatusResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "url": { "type": "string" },
+          "status": { "type": "string", "enum": ["pending", "scanning", "completed", "failed"] },
+          "overall_score": { "type": "integer", "nullable": true },
+          "completed_at": { "type": "string", "format": "date-time", "nullable": true }
+        }
+      },
+      "ReportResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "url": { "type": "string" },
+          "overall_score": { "type": "integer" },
+          "scores": {
+            "type": "object",
+            "properties": {
+              "seo": { "type": "integer" },
+              "security": { "type": "integer" },
+              "performance": { "type": "integer" },
+              "accessibility": { "type": "integer" },
+              "mobile": { "type": "integer" },
+              "technical": { "type": "integer" },
+              "ai_readiness": { "type": "integer" }
+            }
+          },
+          "issues_summary": {
+            "type": "object",
+            "properties": {
+              "total": { "type": "integer" },
+              "critical": { "type": "integer" },
+              "warning": { "type": "integer" },
+              "info": { "type": "integer" }
+            }
+          },
+          "prioritized_recommendations": {
+            "type": "array",
+            "items": { "type": "object" }
+          }
+        }
+      },
+      "MonitoringRequest": {
+        "type": "object",
+        "required": ["url"],
+        "properties": {
+          "url": { "type": "string", "format": "uri" },
+          "frequency": { "type": "string", "enum": ["daily", "weekly"], "default": "daily" }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": { "type": "string" },
+          "code": { "type": "string" },
+          "message": { "type": "string" }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/scans": {
+      "post": {
+        "summary": "Trigger a safe website audit",
+        "operationId": "triggerScan",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ScanTriggerRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Scan queued or initiated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ScanStatusResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid URL or SSRF rejection",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/scans/{id}": {
+      "get": {
+        "summary": "Check status of an initiated scan",
+        "operationId": "getScanStatus",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Scan status details",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ScanStatusResponse" }
+              }
+            }
+          },
+          "404": {
+            "description": "Scan not found"
+          }
+        }
+      }
+    },
+    "/reports/{id}": {
+      "get": {
+        "summary": "Retrieve full intelligence audit report",
+        "operationId": "getReport",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Full structured audit report",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ReportResponse" }
+              }
+            }
+          },
+          "404": {
+            "description": "Report not found or scan not completed"
+          }
+        }
+      }
+    },
+    "/monitoring": {
+      "get": {
+        "summary": "List monitored targets for account",
+        "operationId": "listMonitoredWebsites",
+        "responses": {
+          "200": {
+            "description": "Array of monitored websites"
+          }
+        }
+      },
+      "post": {
+        "summary": "Add a website to scheduled monitoring",
+        "operationId": "addMonitoredWebsite",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/MonitoringRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Website enrolled in monitoring"
+          },
+          "403": {
+            "description": "Plan quota limit reached"
+          }
+        }
+      }
+    },
+    "/monitoring/{id}": {
+      "delete": {
+        "summary": "Remove a monitored website",
+        "operationId": "deleteMonitoredWebsite",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Monitored website deleted"
+          },
+          "404": {
+            "description": "Target not found"
+          }
+        }
+      }
+    }
+  }
+}

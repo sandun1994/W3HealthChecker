@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Accessibility Issues Demo</title>
+</head>
+<body>
+    <!-- Missing lang attribute on html tag -->
+    <!-- Form controls with no labels -->
+    <form>
+        <input type="text" name="username">
+        <input type="password" name="password">
+        <!-- Duplicate IDs -->
+        <button id="action-btn">Log In</button>
+        <button id="action-btn">Register</button>
+    </form>
+
+    <!-- Empty link and empty button -->
+    <a href="/target"></a>
+    <button></button>
+
+    <!-- Images with no alt -->
+    <img src="/photo1.png">
+    <img src="/photo2.png">
+
+    <!-- Iframe with no title -->
+    <iframe src="https://example.com/widget"></iframe>
+</body>
+</html>
