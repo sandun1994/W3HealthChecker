@@ -27,8 +27,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set image name
-        run: echo "IMAGE_NAME=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
-
+        run: echo "IMAGE_NAME=ghcr.io/sandun1994/w3healthchecker" >> "$GITHUB_ENV"
+      
       - name: Build and publish production image
         uses: docker/build-push-action@v6
         with:
@@ -36,6 +36,5 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ github.sha }}
-         
+            ghcr.io/sandun1994/w3healthchecker:latest
+            ghcr.io/sandun1994/w3healthchecker:${{ github.sha }}
