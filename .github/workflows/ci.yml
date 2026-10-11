@@ -1,0 +1,66 @@
+name: W3HealthChecker CI/CD Quality Gate
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Backend Tests & Frontend Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, xml, ctype, iconv, intl, pdo, pdo_sqlite, curl, bcmath, fileinfo
+          coverage: none
+
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install NPM dependencies
+        run: npm ci
+
+      - name: Build frontend production assets
+        run: npm run build
+
+      - name: Prepare Laravel environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Execute automated test suite
+        run: php artisan test --parallel
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ':memory:'
+
+      - name: Secret Leak Protection Check
+        run: |
+          if [ -f ".env.production" ] || [ -f "auth.json" ]; then
+            echo "Security violation: Sensitive credential file detected in workspace!"
+            exit 1
+          fi

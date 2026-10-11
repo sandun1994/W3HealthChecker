@@ -1,0 +1,37 @@
+{
+  "brand_name": "W3HealthChecker",
+  "tagline": "Know your website. Understand what's wrong. Know exactly how to fix it.",
+  "navigation": {
+    "tools": "Free Tools",
+    "compare": "Compare",
+    "guides": "Guides",
+    "monitoring": "Monitoring",
+    "dashboard": "Dashboard",
+    "billing": "Pricing",
+    "agency": "Agency",
+    "developers": "Developers"
+  },
+  "pillars": {
+    "seo": "Search Engine Optimization",
+    "security": "Application Security",
+    "performance": "Website Performance",
+    "accessibility": "Accessibility",
+    "mobile": "Mobile Readiness",
+    "technical": "Technical Infrastructure",
+    "ai_readiness": "AI & Search Readiness"
+  },
+  "status_labels": {
+    "excellent": "Excellent",
+    "good": "Good",
+    "needs_improvement": "Needs Improvement",
+    "poor": "Poor",
+    "critical": "Critical"
+  },
+  "severities": {
+    "critical": "Critical",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low",
+    "info": "Informational"
+  }
+}

@@ -288,4 +288,32 @@ class MonitoringController extends Controller
             'changes' => $changes,
         ]);
     }
+
+    /**
+     * Unified website health intelligence, historical lifecycle, root-cause clusters, and benchmarks.
+     */
+    public function intelligence(
+        string $domain,
+        \App\Services\Intelligence\HistoricalIntelligenceService $intelligenceService,
+        \App\Services\Intelligence\BenchmarkingService $benchmarkingService
+    ): JsonResponse {
+        $website = Website::where('domain', $domain)->first();
+
+        if (!$website) {
+            return response()->json([
+                'success' => false,
+                'message' => "Website record not found for {$domain}.",
+            ], 404);
+        }
+
+        $analysis = $intelligenceService->analyze($website);
+        $benchmark = $benchmarkingService->getBenchmark($website);
+
+        return response()->json([
+            'success' => true,
+            'domain' => $domain,
+            'intelligence' => $analysis,
+            'benchmarks' => $benchmark,
+        ]);
+    }
 }

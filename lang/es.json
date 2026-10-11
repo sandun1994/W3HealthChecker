@@ -1,0 +1,37 @@
+{
+  "brand_name": "W3HealthChecker",
+  "tagline": "Conozca su sitio web. Entienda qué falla. Sepa exactamente cómo solucionarlo.",
+  "navigation": {
+    "tools": "Herramientas Gratuitas",
+    "compare": "Comparar",
+    "guides": "Guías",
+    "monitoring": "Monitoreo",
+    "dashboard": "Panel de Control",
+    "billing": "Precios",
+    "agency": "Agencia",
+    "developers": "Desarrolladores"
+  },
+  "pillars": {
+    "seo": "Optimización para Motores de Búsqueda",
+    "security": "Seguridad de la Aplicación",
+    "performance": "Rendimiento Web",
+    "accessibility": "Accesibilidad",
+    "mobile": "Adaptabilidad Móvil",
+    "technical": "Infraestructura Técnica",
+    "ai_readiness": "Preparación para Búsqueda y IA"
+  },
+  "status_labels": {
+    "excellent": "Excelente",
+    "good": "Bueno",
+    "needs_improvement": "Necesita Mejoras",
+    "poor": "Deficiente",
+    "critical": "Crítico"
+  },
+  "severities": {
+    "critical": "Crítico",
+    "high": "Alto",
+    "medium": "Medio",
+    "low": "Bajo",
+    "info": "Informativo"
+  }
+}

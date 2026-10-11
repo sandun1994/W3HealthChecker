@@ -193,6 +193,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/agency/webhooks', [AgencyController::class, 'webhooks'])->name('api.agency.webhooks');
     Route::post('/api/agency/webhooks', [AgencyController::class, 'storeWebhook'])->name('api.agency.webhooks.store');
     Route::delete('/api/agency/webhooks/{id}', [AgencyController::class, 'destroyWebhook'])->name('api.agency.webhooks.destroy');
+
+    // Integrations API
+    Route::get('/api/integrations', [\App\Http\Controllers\IntegrationController::class, 'index'])->name('api.integrations.index');
+    Route::post('/api/integrations', [\App\Http\Controllers\IntegrationController::class, 'store'])->name('api.integrations.store');
+    Route::delete('/api/integrations/{id}', [\App\Http\Controllers\IntegrationController::class, 'destroy'])->name('api.integrations.destroy');
+    Route::post('/api/integrations/{id}/test', [\App\Http\Controllers\IntegrationController::class, 'test'])->name('api.integrations.test');
 });
 
 // REST API V1 (Token Authenticated via Bearer Token, plan rate limited)
@@ -222,4 +228,22 @@ Route::middleware('throttle:30,1')->group(function () {
     Route::delete('/api/monitoring/{id}', [MonitoringController::class, 'destroy'])->name('api.monitoring.destroy');
     Route::get('/api/websites/{domain}/history', [MonitoringController::class, 'history'])->name('api.websites.history');
     Route::get('/api/websites/{domain}/trend', [MonitoringController::class, 'trend'])->name('api.websites.trend');
+    Route::get('/api/websites/{domain}/intelligence', [MonitoringController::class, 'intelligence'])->name('api.websites.intelligence');
+
+    // Remediation & Guided Fixes API
+    Route::get('/api/remediation/{issueId}', [\App\Http\Controllers\RemediationController::class, 'show'])->name('api.remediation.show');
+    Route::post('/api/remediation/{issueId}/explain', [\App\Http\Controllers\RemediationController::class, 'explain'])->name('api.remediation.explain');
+    Route::post('/api/remediation/{issueId}/status', [\App\Http\Controllers\RemediationController::class, 'updateStatus'])->name('api.remediation.status');
+
+    // Localization API
+    Route::get('/api/i18n/{locale}', function (string $locale) {
+        $allowed = ['en', 'es'];
+        $selected = in_array(strtolower($locale), $allowed, true) ? strtolower($locale) : 'en';
+        $path = base_path("lang/{$selected}.json");
+        $data = file_exists($path) ? json_decode(file_get_contents($path), true) : [];
+        return response()->json([
+            'locale' => $selected,
+            'translations' => $data,
+        ]);
+    })->name('api.i18n');
 });
