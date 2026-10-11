@@ -3,6 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        (function() {
+            try {
+                const savedTheme = localStorage.getItem('w3_theme') || 'dark';
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (savedTheme === 'dark' || (savedTheme === 'system' && prefersDark)) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            } catch (e) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
     <title>{{ $pageTitle ?? 'W3HealthChecker — Know Your Website. Improve Everything.' }}</title>
     <meta name="description" content="{{ $metaDescription ?? 'Complete website intelligence SaaS platform. Real-time audits across SEO, performance, security, accessibility, and AI search readiness.' }}">
     
@@ -207,7 +222,7 @@
         };
     </script>
 </head>
-<body class="bg-slate-950 text-slate-100 antialiased min-h-screen flex flex-col font-sans">
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 antialiased min-h-screen flex flex-col font-sans transition-colors duration-200">
     <div id="root" class="flex-grow flex flex-col"></div>
 </body>
 </html>

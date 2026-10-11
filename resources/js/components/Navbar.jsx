@@ -1,5 +1,6 @@
 import React from 'react';
 import { Activity, ShieldCheck, Cpu, ArrowRight, User, LogOut } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
 
 export default function Navbar({ onNavigate, currentUser, onLogout }) {
   return (
@@ -87,8 +88,10 @@ export default function Navbar({ onNavigate, currentUser, onLogout }) {
           </a>
         </nav>
 
-        {/* Auth / CTA Button */}
+        {/* Theme Toggle & Auth / CTA Buttons */}
         <div className="flex items-center gap-3">
+          <ThemeToggle />
+
           {currentUser ? (
             <div className="flex items-center gap-2">
               <a

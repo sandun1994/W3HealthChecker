@@ -1,5 +1,6 @@
 import React from 'react';
 import { Activity, ShieldCheck, Zap, Globe, FileText, CheckCircle2 } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
 
 export default function Footer({ onNavigate }) {
   return (
@@ -74,6 +75,7 @@ export default function Footer({ onNavigate }) {
             <span>Privacy Policy</span>
             <span>Terms of Service</span>
             <span>Security Policy</span>
+            <ThemeToggle />
           </div>
         </div>
       </div>
