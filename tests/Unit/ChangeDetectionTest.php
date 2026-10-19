@@ -6,10 +6,12 @@ use App\Models\Scan;
 use App\Models\ScanMetric;
 use App\Models\Website;
 use App\Services\Monitoring\ChangeDetectionService;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ChangeDetectionTest extends TestCase
 {
+    use RefreshDatabase;
     protected ChangeDetectionService $service;
 
     protected function setUp(): void

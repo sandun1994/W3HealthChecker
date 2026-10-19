@@ -9,6 +9,8 @@ use Tests\TestCase;
 
 class ScanCachingTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_blocks_ssrf_and_private_ip_requests_via_api(): void
     {
         $blockedUrls = [

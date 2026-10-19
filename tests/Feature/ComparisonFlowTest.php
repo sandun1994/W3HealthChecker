@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ComparisonFlowTest extends TestCase
 {
+    use RefreshDatabase;
     public function test_compare_endpoint_requires_both_urls(): void
     {
         $response = $this->postJson('/api/compare', []);

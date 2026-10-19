@@ -6,10 +6,12 @@ use App\Http\Controllers\GuideController;
 use App\Http\Controllers\ToolController;
 use App\Models\Scan;
 use App\Models\Website;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class GuidesFlowTest extends TestCase
 {
+    use RefreshDatabase;
     public function test_guides_index_returns_all_educational_guides(): void
     {
         $response = $this->get('/guides');
