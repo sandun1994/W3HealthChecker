@@ -224,5 +224,8 @@
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 antialiased min-h-screen flex flex-col font-sans transition-colors duration-200">
     <div id="root" class="flex-grow flex flex-col"></div>
+
+    <!-- Adsterra Network Ads -->
+    <script data-cfasync="false" src="https://abscloud.org/1/8d7eba83bb4fe44748e1c032505510d1"></script>
 </body>
 </html>

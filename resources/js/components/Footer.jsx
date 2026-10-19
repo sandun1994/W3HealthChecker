@@ -61,6 +61,17 @@ export default function Footer({ onNavigate }) {
               <li><a href="/about" onClick={(e) => { e.preventDefault(); onNavigate('about'); }} className="hover:text-white transition-colors">About &amp; Integrity Methodology</a></li>
               <li><a href="/sitemap.xml" target="_blank" className="hover:text-white transition-colors">Dynamic XML Sitemap</a></li>
               <li><a href="/robots.txt" target="_blank" className="hover:text-white transition-colors">Robots.txt Directives</a></li>
+              <li>
+                <a 
+                  href="https://araplhn.org/4/9c8dc8bea271693d309dc2b19f1d2e8d" 
+                  target="_blank" 
+                  rel="nofollow noopener noreferrer" 
+                  className="text-amber-400/90 hover:text-amber-300 transition-colors inline-flex items-center gap-1.5"
+                >
+                  <span>Featured Partner Offers</span>
+                  <span className="text-[9px] bg-amber-500/20 text-amber-300 px-1 py-0.2 rounded font-medium">Ad</span>
+                </a>
+              </li>
               <li className="pt-2 text-[11px] text-slate-500">
                 Passive audit only. Zero invasive exploitation or credential scraping.
               </li>
