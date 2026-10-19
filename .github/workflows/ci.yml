@@ -53,7 +53,7 @@ jobs:
           php artisan key:generate
 
       - name: Execute automated test suite
-        run: php artisan test --parallel
+        run: php artisan test
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: ':memory:'
