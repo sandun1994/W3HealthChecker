@@ -67,4 +67,13 @@ class DeploymentReadinessTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_monetag_service_worker_is_served(): void
+    {
+        $response = $this->get('/sw.js');
+        $response->assertStatus(200);
+        $this->assertStringContainsString('application/javascript', $response->headers->get('Content-Type') ?? '');
+        $this->assertStringContainsString('3nbf4.com', $response->getContent());
+        $this->assertStringContainsString('12071690', $response->getContent());
+    }
 }

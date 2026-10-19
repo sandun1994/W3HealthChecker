@@ -79,6 +79,24 @@ Route::get('/robots.txt', function () {
     return response($content, 200, ['Content-Type' => 'text/plain']);
 });
 
+// Monetag Service Worker Route Fallback
+Route::get('/sw.js', function () {
+    $path = public_path('sw.js');
+    if (file_exists($path)) {
+        return response(file_get_contents($path), 200, [
+            'Content-Type' => 'application/javascript',
+            'Service-Worker-Allowed' => '/',
+            'Cache-Control' => 'no-cache, no-store, must-revalidate',
+        ]);
+    }
+    $swContent = "self.options = {\n    \"domain\": \"3nbf4.com\",\n    \"zoneId\": 12071690\n};\nself.lary = \"\";\nimportScripts('https://3nbf4.com/act/files/service-worker.min.js?r=sw');\n";
+    return response($swContent, 200, [
+        'Content-Type' => 'application/javascript',
+        'Service-Worker-Allowed' => '/',
+        'Cache-Control' => 'no-cache, no-store, must-revalidate',
+    ]);
+})->name('monetag.sw');
+
 // Monitoring & Retention Dashboard
 Route::get('/monitoring', function () {
     return view('app', [
