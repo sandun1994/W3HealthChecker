@@ -76,4 +76,13 @@ class DeploymentReadinessTest extends TestCase
         $this->assertStringContainsString('3nbf4.com', $response->getContent());
         $this->assertStringContainsString('12071690', $response->getContent());
     }
+
+    public function test_monetization_scripts_are_embedded_in_head(): void
+    {
+        $response = $this->get('/');
+        $response->assertStatus(200);
+        $this->assertStringContainsString('https://abscloud.org/1/8d7eba83bb4fe44748e1c032505510d1', $response->getContent());
+        $this->assertStringContainsString('3nbf4.com', $response->getContent());
+        $this->assertStringContainsString('12071690', $response->getContent());
+    }
 }
