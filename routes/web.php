@@ -89,7 +89,7 @@ Route::get('/sw.js', function () {
             'Cache-Control' => 'no-cache, no-store, must-revalidate',
         ]);
     }
-    $swContent = "self.options = {\n    \"domain\": \"3nbf4.com\",\n    \"zoneId\": 12071690\n};\nself.lary = \"\";\nimportScripts('https://3nbf4.com/act/files/service-worker.min.js?r=sw');\n";
+    $swContent = "self.options = {\n    \"domain\": \"quge5.com\",\n    \"zoneId\": 302396\n};\nself.lary = \"\";\nimportScripts('https://quge5.com/act/files/service-worker.min.js?r=sw');\n";
     return response($swContent, 200, [
         'Content-Type' => 'application/javascript',
         'Service-Worker-Allowed' => '/',

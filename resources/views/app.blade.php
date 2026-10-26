@@ -225,14 +225,14 @@
     <!-- Adsterra Popunder (Unit ID: 31816779) -->
     <script data-cfasync="false" src="https://abscloud.org/1/8d7eba83bb4fe44748e1c032505510d1"></script>
 
-    <!-- Monetag Monetization Tag (Domain: 3nbf4.com, Zone: 12071690) -->
+    <!-- Monetag MultiTag (Zone: 302396) -->
     <script>
         (function() {
             var isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
             if (!isLocal) {
                 var s = document.createElement('script');
-                s.src = 'https://3nbf4.com/88/tag.min.js';
-                s.setAttribute('data-zone', '12071690');
+                s.src = 'https://quge5.com/88/tag.min.js';
+                s.setAttribute('data-zone', '302396');
                 s.async = true;
                 s.setAttribute('data-cfasync', 'false');
                 document.head.appendChild(s);

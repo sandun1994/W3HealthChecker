@@ -73,8 +73,8 @@ class DeploymentReadinessTest extends TestCase
         $response = $this->get('/sw.js');
         $response->assertStatus(200);
         $this->assertStringContainsString('application/javascript', $response->headers->get('Content-Type') ?? '');
-        $this->assertStringContainsString('3nbf4.com', $response->getContent());
-        $this->assertStringContainsString('12071690', $response->getContent());
+        $this->assertStringContainsString('quge5.com', $response->getContent());
+        $this->assertStringContainsString('302396', $response->getContent());
     }
 
     public function test_monetization_scripts_are_embedded_in_head(): void
@@ -82,7 +82,7 @@ class DeploymentReadinessTest extends TestCase
         $response = $this->get('/');
         $response->assertStatus(200);
         $this->assertStringContainsString('https://abscloud.org/1/8d7eba83bb4fe44748e1c032505510d1', $response->getContent());
-        $this->assertStringContainsString('3nbf4.com', $response->getContent());
-        $this->assertStringContainsString('12071690', $response->getContent());
+        $this->assertStringContainsString('quge5.com', $response->getContent());
+        $this->assertStringContainsString('302396', $response->getContent());
     }
 }
