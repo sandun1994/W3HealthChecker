@@ -24,12 +24,15 @@ class SecurityHeadersMiddleware
         $response->headers->set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
 
         // Content-Security-Policy compatible with Vite, React, Google Fonts, and local dev
-        $csp = "default-src 'self'; " .
-               "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " .
-               "style-src 'self' 'unsafe-inline' https://fonts.bunny.net https://fonts.googleapis.com; " .
-               "font-src 'self' https://fonts.bunny.net https://fonts.gstatic.com data:; " .
-               "img-src 'self' data: https:; " .
+        // Content-Security-Policy compatible with Vite, React, Google Fonts, Adsterra, Monetag, and analytics
+        $csp = "default-src 'self' https: data: blob:; " .
+               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https: blob:; " .
+               "style-src 'self' 'unsafe-inline' https://fonts.bunny.net https://fonts.googleapis.com https:; " .
+               "font-src 'self' https://fonts.bunny.net https://fonts.gstatic.com data: https:; " .
+               "img-src 'self' data: https: blob:; " .
                "connect-src 'self' http: https: ws: wss:; " .
+               "frame-src 'self' https:; " .
+               "worker-src 'self' blob: https:; " .
                "frame-ancestors 'self';";
         $response->headers->set('Content-Security-Policy', $csp);
 
